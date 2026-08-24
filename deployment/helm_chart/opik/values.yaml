@@ -744,6 +744,10 @@ databaseAnalyticsDataModel:
   # message naming the flag and the observed engine. That is intentional — it beats serving traffic whose trace
   # deletes are guaranteed to fail — and it clears on the next probe once the two sides are back in step.
   tracesDistributedWrapEnabled: false
+  # Turn true only once the EXCHANGE has put the weekly partitioned successor under `traces`, so a trace DELETE
+  # can prune to the partitions its own ids resolve to. Enables the PRUNING, not the partitioning - setting it creates
+  # nothing. Purely an optimisation; false keeps the unbounded delete.
+  tracesWeeklyPartitionPruningEnabled: false
 
 # ClickHouse partition-health observability (OPIK-6904). Polls system.parts plus the
 # lightweight-delete mask and publishes opik.clickhouse.partition.* gauges; a distributed lock keeps
